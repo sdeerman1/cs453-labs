@@ -1,0 +1,10 @@
+**1. What is the difference between a TCP message and an HTTP request?**  
+TCP messages are simply a way of moving bytes. HTTP uses TCP to deliver the bytes, but HTTP is built up moreon top. HTTP requests have structure. There are different HTTP methods that give context to what the request is asking for, making HTTP requests much more powerful.  
+**2. What does the `Content-Type: application/json` header tell the server?**  
+This tells the server that the data being sent in is of type JSON (JavaScript Object Notation). The server can then interpret the request data by parsing it correctly since it is now expecting a JSON object.  
+**3. Why should a server return different HTTP status codes for different situations?**  
+The status codes can be very valuable and tell the user what is going wrong in the backend. The different codes can tell the user information such as if the error is within the server, the client, or the request. There are HTTP success codes that let the user know the action taken was successful, or codes that let the user know exactly why the action was not successful so the user can attempt to fix the issue.  
+**4. What happens if the client sends invalid JSON?**  
+In this lab, we have error checking for if the JSON is invalid, and a JSON object is returned that states that the error is invalid JSON. The server continues and can continue to take requests but the request with the invalid JSON won't be fulfilled.  
+**5. How is this lab different from Lab 1?**  
+In Lab 1, we just created a TCP command server that completed some simple requests given input. This lab utilizes HTTP, and we can do much more. We can do some of the same tasks, such as /echo, but we now take JSON as input. JSON allows us to take in multiple inputs at once so we can fulfill more complex requests such as /calculate.

@@ -1,0 +1,1 @@
+I chose to do the 'GET /time' graduate extension. When called, this route returns the current date and time using the javascript Date() object.

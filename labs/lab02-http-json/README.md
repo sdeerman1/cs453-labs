@@ -180,6 +180,8 @@ npm run server
 
 By default, the server should listen on port `3000`.
 
+**UPDATE**: I had to comment out the last if statement in server.js to keep the server up after running "npm run server" (before it would start and then immediately disconnect). 
+
 You can test the server in a browser by visiting:
 
 ```text
