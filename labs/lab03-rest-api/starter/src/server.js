@@ -17,29 +17,68 @@ export function createApp() {
     res.json({ status: "ok" });
   });
 
-  // TODO: Return all items.
   app.get("/items", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    res.json(items);
   });
 
-  // TODO: Return one item by ID.
   app.get("/items/:id", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const requestedID = Number(req.params.id);
+    const requestedItem = items.find(item => item.id === requestedID);
+    if (requestedItem) {
+      res.json(requestedItem);
+    }
+    else {
+      res.status(404).json({ error: "Item not found."})
+    }
   });
 
-  // TODO: Create a new item.
   app.post("/items", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const itemName = req.body.name;
+    const itemQuantity = Number(req.body.quantity);
+    if ( (itemName.trim().length > 0) && (!isNaN(itemQuantity) && itemQuantity > 0) ) {
+      const newItem = { id: nextId, name: itemName, quantity: itemQuantity };
+      items.push(newItem);
+      nextId = nextId + 1;
+      res.status(201).json(newItem);
+    }
+    else {
+      res.status(400).json({ error: "Invalid or missing data." });
+    }
   });
 
-  // TODO: Update an existing item.
   app.put("/items/:id", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const requestedID = Number(req.params.id);
+    const requestedItem = items.find(item => item.id == requestedID);
+    if (requestedItem) {
+      const itemName = req.body.name;
+      const itemQuantity = Number(req.body.quantity);
+      if ( (itemName.trim().length > 0) && (!isNaN(itemQuantity) && itemQuantity > 0) ) {
+        requestedItem.name = itemName;
+        requestedItem.quantity = itemQuantity;
+        res.json(requestedItem);
+      }
+      else {
+        res.status(400).json({ error: "Invalid or missing data." });
+      }
+    }
+    else {
+      res.status(404).json({ error: "Item not found."})
+    }
   });
 
-  // TODO: Delete an existing item.
   app.delete("/items/:id", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const requestedID = Number(req.params.id);
+    const requestedItem = items.find(item => item.id == requestedID);
+    if (requestedItem) {
+      const index = items.indexOf(requestedItem);
+      if (index > -1) {
+        items.splice(index, 1);
+      }
+      res.status(204).json({});
+    }
+    else {
+      res.status(404).json({ error: "Item not found."})
+    }
   });
 
   app.use((req, res) => {
@@ -51,11 +90,11 @@ export function createApp() {
 
 const isMainModule = process.argv[1] === new URL(import.meta.url).pathname;
 
-if (isMainModule) {
+// if (isMainModule) {
   const PORT = process.env.PORT || 3000;
   const app = createApp();
 
   app.listen(PORT, () => {
     console.log(`Lab 3 REST API listening on port ${PORT}`);
   });
-}
+// }
