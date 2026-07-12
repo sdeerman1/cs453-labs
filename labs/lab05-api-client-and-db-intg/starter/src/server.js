@@ -82,7 +82,8 @@ export function createApp() {
 
       if (categoryResult.rows.length === 0) {
         return res.status(400).json({
-          error: "Invalid category ID"
+          error: "Invalid category ID",
+          message: "Invalid category ID. Options are 1 or 2."
         });
       }
 
@@ -148,7 +149,8 @@ export function createApp() {
 
       if (categoryResult.rows.length === 0) {
         return res.status(400).json({
-          error: "Invalid category ID"
+          error: "Invalid category ID",
+          message: "Invalid category ID. Options are 1 or 2."
         });
       }
 
@@ -337,10 +339,10 @@ const isMainModule = process.argv[1] === new URL(import.meta.url).pathname;
   // if database has already been initialized without my "category" column added,
   // uncomment the below code out to reset the tables.
 
-  await pool.query(`
-    DROP TABLE items;
-    DROP TABLE categories;
-    `)
+  // await pool.query(`
+  //   DROP TABLE items;
+  //   DROP TABLE categories;
+  //   `)
 
   initializeDatabase()
     .then(() => {
